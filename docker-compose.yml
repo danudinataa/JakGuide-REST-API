@@ -1,0 +1,25 @@
+version: '3'
+services:
+  api:
+    build: .
+    image: jakguide-rest-api
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+    environment:
+      MONGO_URI: mongodb://mongo:27017/library
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
